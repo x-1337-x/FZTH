@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { removeFromCart, incrQtty, decrQtty } from '../../actions/cart';
+import { removeFromCart, setQtty } from '../../actions/cart';
 
 import './style.css';
 
@@ -11,12 +11,7 @@ class Cart extends Component {
   }
 
   handleInputChange = ({target}) => {
-    let element = this.props.items.filter(el => el.id === parseInt(target.name, 10))[0];
-    if (target.value > element.qtty) {
-      this.props.increase(parseInt(target.name, 10))
-    } else if (target.value < element.qtty) {
-      this.props.decrease(parseInt(target.name, 10))
-    }
+    this.props.setQtty(parseInt(target.name, 10), target.value)
   }
 
   render() {
@@ -58,11 +53,8 @@ const dispatchToProps = dispatch => ({
   removeItem(id) {
     dispatch(removeFromCart(id))
   },
-  increase(id) {
-    dispatch(incrQtty(id))
-  },
-  decrease(id) {
-    dispatch(decrQtty(id))
+  setQtty(id, qtty) {
+    dispatch(setQtty(id, qtty))
   }
 })
 

@@ -48,6 +48,14 @@ export const cart = (state = defaultState, action) => {
       }
     }
 
+    case 'SET_QUANTITY':
+      return {
+        ...state,
+        items: [...state.items].map(el => {
+          return el.id === action.id ? {...el, qtty: action.qtty} : {...el}
+        })
+      }
+
     case 'REMOVE_FROM_CART':
       return {
         ...state,
