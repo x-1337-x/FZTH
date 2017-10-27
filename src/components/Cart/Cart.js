@@ -10,8 +10,8 @@ class Cart extends Component {
     this.props.removeItem(id)
   }
 
-  handleInputChange = ({target}) => {
-    this.props.setQtty(parseInt(target.name, 10), target.value)
+  handleInputChange = (id, value) => {
+    this.props.setQtty(id, value)
   }
 
   render() {
@@ -26,12 +26,11 @@ class Cart extends Component {
             return (
               <div key={i}>
                 {el.id} ({el.qtty})
-                <input 
-                  name = {el.id}
+                <input
                   type="number"
                   min="0"
                   value={el.qtty}
-                  onChange={this.handleInputChange}
+                  onChange={(e) => this.handleInputChange(el.id, parseInt(e.target.value, 10))}
                 />
                 <button onClick={() => this.removeItem(el.id)}>x</button>
               </div>
