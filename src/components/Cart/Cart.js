@@ -7,8 +7,6 @@ import { changeProductQtty }  from '../../actions/products';
 import './style.css';
 
 class Cart extends Component {
-  total = this.props.items.map(el => el.price).reduce((acc, curr) => acc + curr, 0);
-
   removeItem(id, qtty) {
     this.props.removeItem(id);
     this.props.changeProductQtty(id, qtty, '+');
