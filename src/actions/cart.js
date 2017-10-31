@@ -1,8 +1,7 @@
 const ADD_TO_CART = 'ADD_TO_CART';
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
-const INCREASE_QUANTITY = 'INCREASE_QUANTITY'
-const DECREASE_QUANTITY = 'DECREASE_QUANTITY'
-const SET_QUANTITY = 'SET_QUANTITY'
+const SET_QUANTITY = 'SET_QUANTITY';
+const SEND_ORDER = 'SEND_ORDER';
 
 export const addToCart = product => {
   return {
@@ -18,24 +17,17 @@ export const removeFromCart = id => {
   }
 }
 
-export const incrQtty = id => {
-  return {
-    type: INCREASE_QUANTITY,
-    id
-  }
-}
-
-export const decrQtty = id => {
-  return {
-    type: DECREASE_QUANTITY,
-    id
-  }
-}
-
 export const setQtty = (id, qtty) => {
   return {
     type: SET_QUANTITY,
     id,
     qtty
+  }
+}
+
+export const sendOrder = order => {
+  return {
+    type: SEND_ORDER,
+    order
   }
 }

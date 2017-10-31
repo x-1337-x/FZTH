@@ -1,5 +1,9 @@
 const defaultState = {
-  items: []
+  items: [],
+  order: {
+    id: null,
+    contents: []
+  }
 }
 
 export const cart = (state = defaultState, action) => {
@@ -18,32 +22,7 @@ export const cart = (state = defaultState, action) => {
       } else {
         return {
           ...state,
-          items: [...items, {id: action.product.id, qtty: 1}]
-        }
-      }
-    }
-
-    case 'INCREASE_QUANTITY': 
-      return {
-        ...state,
-        items: [...state.items].map(el => {
-          return el.id === action.id ? {...el, qtty: (el.qtty + 1)} : {...el}
-        })
-      }
-
-    case 'DECREASE_QUANTITY': {
-      let targetItem = [...state.items].filter(i => i.id === action.id)
-      if (targetItem[0].qtty <= 1) {
-        return {
-          ...state,
-          items: [...state.items].filter(i => i.id !== action.id)
-        }
-      } else {
-        return {
-          ...state,
-          items: [...state.items].map(el => {
-            return el.id === action.id ? {...el, qtty: (el.qtty - 1)} : {...el}
-          })
+          items: [...items, {id: action.product.id, qtty: 1, price: action.product.price}]
         }
       }
     }
@@ -61,6 +40,17 @@ export const cart = (state = defaultState, action) => {
         ...state,
         items: [...state.items].filter(i => i.id !== action.id)
       }
+
+    case 'SEND_ORDER':
+      return {
+        ...state,
+        items: [],
+        order: {
+          id: action.order.id,
+          contents: action.order.contents
+        }
+      }
+
     default:
       return state;
   }

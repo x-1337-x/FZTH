@@ -1,17 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { removeFromCart, setQtty } from '../../actions/cart';
+import { removeFromCart, setQtty, sendOrder } from '../../actions/cart';
+import { changeProductQtty }  from '../../actions/products';
 
 import './style.css';
 
 class Cart extends Component {
-  removeItem(id) {
-    this.props.removeItem(id)
+  total = this.props.items.map(el => el.price).reduce((acc, curr) => acc + curr, 0);
+
+  removeItem(id, qtty) {
+    this.props.removeItem(id);
+    this.props.changeProductQtty(id, qtty, 'add');
   }
 
-  handleInputChange = (id, value) => {
-    this.props.setQtty(id, value)
+  changeItemQuantity(id, qtty, operand = '+', step = 1) {
+    if (qtty < 2 && operand === '-') return;
+    if (operand === '+') {
+      this.props.setQtty(id, qtty + step);
+      this.props.changeProductQtty(id, step);
+    } else if (operand === '-') {
+      this.props.setQtty(id, qtty - step);
+      this.props.changeProductQtty(id, step, 'add');
+    }
+  }
+
+
+  bagAndTag = () => {
+    this.props.sendOrder({
+      id: Date.now(),
+      contents: this.props.items
+    })
   }
 
   render() {
@@ -26,17 +45,17 @@ class Cart extends Component {
             return (
               <div key={i}>
                 {el.id} ({el.qtty})
-                <input
-                  type="number"
-                  min="0"
-                  value={el.qtty}
-                  onChange={(e) => this.handleInputChange(el.id, parseInt(e.target.value, 10))}
-                />
-                <button onClick={() => this.removeItem(el.id)}>x</button>
+                <button onClick={() => this.changeItemQuantity(el.id, el.qtty, '-')}>-</button>
+                <button onClick={() => this.changeItemQuantity(el.id, el.qtty)}>+</button>
+                <button onClick={() => this.removeItem(el.id, el.qtty)}>x</button>
               </div>
             )}
           )
         )}
+        Total: {this.props.total}
+        <button onClick={this.bagAndTag}>
+          BUY
+        </button>
       </div>
     )
   }
@@ -44,7 +63,9 @@ class Cart extends Component {
 
 const stateToProps = state => {
   return {
-    items: [...state.cart.items]
+    items: [...state.cart.items],
+    order: {...state.cart.order},
+    total: [...state.cart.items].map(el => el.price * el.qtty).reduce((acc, curr) => acc + curr, 0)
   }
 }
 
@@ -53,6 +74,15 @@ const dispatchToProps = dispatch => ({
     dispatch(removeFromCart(id))
   },
   setQtty(id, qtty) {
+    dispatch(setQtty(id, qtty))
+  },
+  sendOrder(order) {
+    dispatch(sendOrder(order));
+  },
+  changeProductQtty(id, qtty, operation) {
+    dispatch(changeProductQtty(id, qtty, operation))
+  },
+  increase(id, qtty) {
     dispatch(setQtty(id, qtty))
   }
 })
