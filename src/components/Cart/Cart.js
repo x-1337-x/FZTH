@@ -79,9 +79,6 @@ const dispatchToProps = dispatch => ({
   },
   changeProductQtty(id, qtty, operation) {
     dispatch(changeProductQtty(id, qtty, operation))
-  },
-  increase(id, qtty) {
-    dispatch(setQtty(id, qtty))
   }
 })
 
