@@ -11,17 +11,17 @@ class Cart extends Component {
 
   removeItem(id, qtty) {
     this.props.removeItem(id);
-    this.props.changeProductQtty(id, qtty, 'add');
+    this.props.changeProductQtty(id, qtty, '+');
   }
 
-  changeItemQuantity(id, qtty, operator = '+', step = 1) {
-    if (qtty < 2 && operator === '-') return;
-    if (operator === '+') {
+  changeItemQuantity(id, qtty, operation = '+', step = 1) {
+    if (qtty < 2 && operation === '-') return;
+    if (operation === '+') {
       this.props.setQtty(id, qtty + step);
       this.props.changeProductQtty(id, step);
-    } else if (operator === '-') {
+    } else if (operation === '-') {
       this.props.setQtty(id, qtty - step);
-      this.props.changeProductQtty(id, step, 'add');
+      this.props.changeProductQtty(id, step, '+');
     }
   }
 

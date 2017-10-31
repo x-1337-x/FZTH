@@ -45,19 +45,19 @@ let defaultState = {
 export const products = (state = defaultState, action) => {
   switch (action.type) {
     case 'CHANGE_PRODUCT_QUANTITY':
-      if (action.operation === 'add') {
+      if (action.operation === '+') {
         return {
           ...state,
           [action.id] : {...state[action.id], qtty: state[action.id].qtty + action.qtty}
         }
-      } else if (action.operation === 'substract') {
+      } else if (action.operation === '-') {
         return {
           ...state,
           [action.id] : {...state[action.id], qtty: state[action.id].qtty - action.qtty}
         }
       }
     break;
-    
+
     default:
       return state;
   }

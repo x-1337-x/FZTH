@@ -8,7 +8,7 @@ export const create = product => {
   }
 }
 
-export const changeProductQtty = (id, qtty, operation = 'substract') => {
+export const changeProductQtty = (id, qtty, operation = '-') => {
   return {
     type: CHANGE_PRODUCT_QUANTITY,
     id,
