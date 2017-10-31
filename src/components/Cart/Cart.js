@@ -14,12 +14,12 @@ class Cart extends Component {
     this.props.changeProductQtty(id, qtty, 'add');
   }
 
-  changeItemQuantity(id, qtty, operand = '+', step = 1) {
-    if (qtty < 2 && operand === '-') return;
-    if (operand === '+') {
+  changeItemQuantity(id, qtty, operator = '+', step = 1) {
+    if (qtty < 2 && operator === '-') return;
+    if (operator === '+') {
       this.props.setQtty(id, qtty + step);
       this.props.changeProductQtty(id, step);
-    } else if (operand === '-') {
+    } else if (operator === '-') {
       this.props.setQtty(id, qtty - step);
       this.props.changeProductQtty(id, step, 'add');
     }
