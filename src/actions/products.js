@@ -1,5 +1,7 @@
-const CREATE_PRODUCT = 'CREATE_PRODUCT';
-const CHANGE_PRODUCT_QUANTITY = 'CHANGE_PRODUCT_QUANTITY'
+import {
+  CREATE_PRODUCT,
+  CHANGE_PRODUCT_QUANTITY
+} from './actions';
 
 export const create = product => {
   return {

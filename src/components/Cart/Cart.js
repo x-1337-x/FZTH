@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { removeFromCart, setQtty, sendOrder } from '../../actions/cart';
 import { changeProductQtty }  from '../../actions/products';
+import { storeOrder }  from '../../actions/orders';
 
 import './style.css';
 
@@ -76,6 +77,7 @@ const dispatchToProps = dispatch => ({
   },
   sendOrder(order) {
     dispatch(sendOrder(order));
+    dispatch(storeOrder(order));
   },
   changeProductQtty(id, qtty, operation) {
     dispatch(changeProductQtty(id, qtty, operation))

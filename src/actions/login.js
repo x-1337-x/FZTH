@@ -1,4 +1,4 @@
-const TOGGLE_AUTH = 'TOGGLE_AUTH';
+import { TOGGLE_AUTH } from './actions';
 
 export const logIn = loggedIn => {
   return {

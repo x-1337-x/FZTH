@@ -12,6 +12,7 @@ import {logIn} from './actions/login'
 
 import Home from './components/Home/Home';
 import Products from './components/Products/Products';
+import Product from './components/Products/Product';
 import Cart from './components/Cart/Cart';
 
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
         <div>
           <Link to="/">Home</Link>
           <Link to="/products">products</Link>
-          <Link to="/products/asd">Some product</Link>
+          <Link to="/products/1">Some product</Link>
           {loggedIn && (<Link to="/products/add">Add</Link>)}
           {loggedIn ?
             (<a href="" onClick={this.handleLogOut}>Log Out</a>)
@@ -46,7 +47,7 @@ class App extends Component {
           <Route exact path="/products" component={Products} />
           <Switch>
             <Route exact path="/products/add" render={() => (loggedIn ? (<div>Add</div>) : (<Redirect to="/"/>))} />
-            <Route exact path="/products/:id" render={() => (<div>A Product</div>)} />
+            <Route exact path="/products/:id" render={({ match }) => (<Product id={match.params.id}/>)} />
           </Switch>
           <Route exact path="/login" render={() => (<div>login</div>)} />
           <Route exact path="/checkout" render={() => (<div>checkout</div>)} />

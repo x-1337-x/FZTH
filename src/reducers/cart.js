@@ -45,10 +45,7 @@ export const cart = (state = defaultState, action) => {
       return {
         ...state,
         items: [],
-        order: {
-          id: action.order.id,
-          contents: action.order.contents
-        }
+        order: null
       }
 
     default:
